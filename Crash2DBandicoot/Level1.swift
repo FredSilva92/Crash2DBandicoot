@@ -8,16 +8,21 @@
 import Foundation
 import SpriteKit
 
-class Level1: LevelScene{
-    private var rollingStone: RollingStone = RollingStone()
+class Level1: LevelScene {
+    private var rollingStone: RollingStone
     private var startRStoneCollider: InvislbleCollider?
     
     override init(size: CGSize) {
+        rollingStone = RollingStone(screenSize: size)
+        
         super.init(size: size)
         
         addChild(crash)
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -10.0)
+        self.physicsWorld.contactDelegate = self
         
-        startRStoneCollider = InvislbleCollider(point: CGPoint(x: rollingStone.position.x + 200, y: 0))
+        
+        startRStoneCollider = InvislbleCollider(point: CGPoint(x: rollingStone.position.x * 1.1, y: 0))
 
         addChild(rollingStone)
         addChild(startRStoneCollider!)
@@ -29,17 +34,8 @@ class Level1: LevelScene{
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        var first : SKPhysicsBody
-        var second : SKPhysicsBody
-        
-        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-            first = contact.bodyA
-            second  = contact.bodyB
-        }
-        else {
-            first = contact.bodyB
-            second = contact.bodyA
-        }
+        let first = getPhysicsContact(contact)[0]
+        let second = getPhysicsContact(contact)[1]
         
         if(first.categoryBitMask == BitMaskCategory.rollingStoneMovePoint &&
            second.categoryBitMask == BitMaskCategory.crash) {
@@ -59,6 +55,27 @@ class Level1: LevelScene{
             second.isDynamic = true
             second.affectedByGravity = true
         }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+        
+        if !crash.isDead {
+            rollingStone.update()
+        }
+    }
+    
+    override func execActions(actionsToPass: [SKAction]) {
+        let resetStone = SKAction.run {
+            self.rollingStone.reset()
+            self.addChild(self.startRStoneCollider!)
+            print("Delayed 1")
+        }
+
+        var actions = actionsToPass
+        actions.append(resetStone)
+
+        super.execActions(actionsToPass: actions)
     }
 }
 

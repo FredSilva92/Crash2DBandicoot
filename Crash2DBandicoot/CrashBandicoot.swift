@@ -17,16 +17,21 @@ class CrashBandicoot: SKSpriteNode {
     private var moveLeft = false
     private var moveRight = false
     private var initialPosition: CGPoint
+    private var jumpStrengh: CGVector
     var isDead = false
     
-    init(position: CGPoint) {
+    init(position: CGPoint, sceneSize: CGSize) {
         self.initialPosition = position
         let texture = SKTexture(imageNamed: "CrashBandicootSprite")
+        jumpStrengh = CGVector(dx: 0, dy: sceneSize.height/3)
+        
         super.init(texture: texture, color: .clear, size: texture.size())
+        
         self.name = "CrashBandicoot"
-        self.zPosition = 5.0
+        self.zPosition = 1.0
         self.position = position
         self.size = CGSize(width: self.size.width/4, height: self.size.height/4)
+        
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.isDynamic = true
         self.physicsBody?.affectedByGravity = true
@@ -60,7 +65,7 @@ class CrashBandicoot: SKSpriteNode {
     func jump(touchPoint: CGPoint) {
         if physicsBody?.velocity.dy == 0 {
             // Apply impulse to make the player jump
-            physicsBody?.applyImpulse(CGVector(dx: 0, dy: 120))
+            physicsBody?.applyImpulse(jumpStrengh)
         }
     }
     

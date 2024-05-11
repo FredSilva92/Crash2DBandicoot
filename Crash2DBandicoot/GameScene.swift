@@ -14,7 +14,11 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     
     override func sceneDidLoad() {
-        super.sceneDidLoad()
+        var bg = SKSpriteNode(imageNamed: "ForestBg")
+        
+        bg.zPosition = -1
+        //bg.anchorPoint = CGPoint(x: 0, y: 0)
+        addChild(bg)
         
         print("size: " + String(Float(self.size.width)) + " " + String(Float(self.size.width)))
         run(SKAction.run {

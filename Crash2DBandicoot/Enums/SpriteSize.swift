@@ -8,6 +8,6 @@
 import Foundation
 
 struct SpriteSize {
-    static let width: CGFloat = 64.0
-    static let height: CGFloat = 64.0
+    static let width: CGFloat = 32.0
+    static let height: CGFloat = 32.0
 }
