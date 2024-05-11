@@ -17,6 +17,7 @@ class CrashBandicoot: SKSpriteNode {
     private var moveLeft = false
     private var moveRight = false
     private var initialPosition: CGPoint
+    var isDead = false
     
     init(position: CGPoint) {
         self.initialPosition = position
