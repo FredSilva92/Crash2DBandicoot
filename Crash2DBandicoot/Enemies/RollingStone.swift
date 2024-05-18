@@ -14,7 +14,7 @@ class RollingStone: SKSpriteNode {
     
     var test = false
     
-    init(screenSize: CGSize) {
+    init() {
 
         
         let texture = SKTexture(imageNamed: "RollingStone")
@@ -53,7 +53,7 @@ class RollingStone: SKSpriteNode {
     }
     
     func update() {
-        if self.physicsBody?.affectedByGravity == true {
+        if self.physicsBody?.affectedByGravity == true && !isPaused {
         //if test {
             
             //self.sprite.position.x += 5

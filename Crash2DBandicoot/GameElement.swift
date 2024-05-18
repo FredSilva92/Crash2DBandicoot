@@ -8,16 +8,26 @@
 import Foundation
 import SpriteKit
 
-class GameElement {
-    internal var sprite: SKSpriteNode
+class GameElement : SKSpriteNode {
+    var initialPosition: CGPoint
     
-    func getSprite() -> SKSpriteNode {
-        return self.sprite
+    init(imageNamed: String, name: String, initialPosition: CGPoint, ratio: CGFloat) {
+        self.initialPosition = initialPosition
+        
+        let texture = SKTexture(imageNamed: imageNamed)
+        super.init(texture: texture, color: .clear, size: CGSize(width: ratio, height: ratio))
+        
+        self.name = name
+        self.position = initialPosition
+        self.zPosition = 1.0
+        
+        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        self.physicsBody?.isDynamic = false
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.allowsRotation = false
     }
     
-    init(sprite: SKSpriteNode) {
-        self.sprite = sprite
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    func update() {}
 }

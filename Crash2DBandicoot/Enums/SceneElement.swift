@@ -12,4 +12,12 @@ struct SceneElement {
     static let wood: Character = "w"
     static let hole: Character = " "
     static let star: Character = "s"
+    static let enemy: Character = "e"
+    
+    struct Names {
+        static let platform = "Platform"
+        static let wood = "WoodPath"
+        static let star = "Star"
+        static let spider = "Spider"
+    }
 }

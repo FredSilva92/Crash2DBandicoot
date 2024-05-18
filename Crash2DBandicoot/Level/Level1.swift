@@ -13,16 +13,15 @@ class Level1: LevelScene {
     private var startRStoneCollider: InvislbleCollider?
     
     override init(size: CGSize) {
-        rollingStone = RollingStone(screenSize: size)
+        rollingStone = RollingStone()
         
         super.init(size: size)
         
+        buildLevel(levelFile: "Level1")
+        
         addChild(crash)
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -10.0)
-        self.physicsWorld.contactDelegate = self
         
-        
-        startRStoneCollider = InvislbleCollider(point: CGPoint(x: rollingStone.position.x * 1.1, y: 0))
+        startRStoneCollider = InvislbleCollider(point: CGPoint(x: rollingStone.position.x * 1.4, y: 0))
 
         addChild(rollingStone)
         addChild(startRStoneCollider!)
@@ -47,13 +46,21 @@ class Level1: LevelScene {
         
         if (first.categoryBitMask == BitMaskCategory.rollingStone &&
             second.categoryBitMask == BitMaskCategory.crash) {
-            //crash.sprite.removeFromParent()
+            onDead()
         }
         
         if (first.categoryBitMask == BitMaskCategory.rollingStone &&
             second.categoryBitMask == BitMaskCategory.woodPath) {
             second.isDynamic = true
             second.affectedByGravity = true
+        }
+        
+        if (first.categoryBitMask == BitMaskCategory.crash &&
+            second.categoryBitMask == BitMaskCategory.star) {
+            run(SKAction.run {
+                let gameoverScene = Level2(size: self.size)
+                self.view?.presentScene(gameoverScene)
+            })
         }
     }
     
@@ -69,13 +76,28 @@ class Level1: LevelScene {
         let resetStone = SKAction.run {
             self.rollingStone.reset()
             self.addChild(self.startRStoneCollider!)
-            print("Delayed 1")
+            self.resetWoodPath()
         }
 
         var actions = actionsToPass
         actions.append(resetStone)
 
         super.execActions(actionsToPass: actions)
+    }
+    
+    override func setPausedElements(paused: Bool) {
+        super.setPausedElements(paused: paused)
+        rollingStone.isPaused = paused
+    }
+    
+    private func resetWoodPath() {
+        let woodPaths = getNodes(withName: SceneElement.Names.wood, ofType: GameElement.self)
+        
+        for wood in woodPaths {
+            wood.position = wood.initialPosition
+            wood.physicsBody?.isDynamic = false
+            wood.physicsBody?.affectedByGravity = false
+        }
     }
 }
 

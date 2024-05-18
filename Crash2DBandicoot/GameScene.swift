@@ -17,10 +17,8 @@ class GameScene: SKScene {
         var bg = SKSpriteNode(imageNamed: "ForestBg")
         
         bg.zPosition = -1
-        //bg.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(bg)
         
-        print("size: " + String(Float(self.size.width)) + " " + String(Float(self.size.width)))
         run(SKAction.run {
             let gameoverScene = Level1(size: self.size)
             self.view?.presentScene(gameoverScene)

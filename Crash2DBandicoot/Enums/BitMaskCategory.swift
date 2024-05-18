@@ -12,6 +12,8 @@ struct BitMaskCategory {
     static let all : UInt32 = UInt32.max
     static let rollingStoneMovePoint: UInt32 = 0b1
     static let rollingStone: UInt32 = 0b10
-    static let woodPath: UInt32 = 0b110
-    static let crash: UInt32 = 0b111
+    static let woodPath: UInt32 = 0b100
+    static let crash: UInt32 = 0b110
+    static let star: UInt32 = 0b111
+    static let spider: UInt32 = 0b1000
 }

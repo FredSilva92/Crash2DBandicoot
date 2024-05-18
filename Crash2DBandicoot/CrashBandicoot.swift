@@ -18,19 +18,34 @@ class CrashBandicoot: SKSpriteNode {
     private var moveRight = false
     private var initialPosition: CGPoint
     private var jumpStrengh: CGVector
+    private var animations:[String: SKAction] = [:]
     var isDead = false
     
     init(position: CGPoint, sceneSize: CGSize) {
         self.initialPosition = position
-        let texture = SKTexture(imageNamed: "CrashBandicootSprite")
-        jumpStrengh = CGVector(dx: 0, dy: sceneSize.height/3)
+        jumpStrengh = CGVector(dx: 0, dy: sceneSize.height/6)
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        let idleFrames = Utils.getTextures(name: Constants.Crash.idle)
+        let idleAction = SKAction.animate(with: idleFrames, timePerFrame: 0.2)
+        animations[Constants.Crash.idle] = Utils.getAnimationAction(name: Constants.Crash.idle, timePerFrame: 0.2)
+        
+        //let walkingFrames = Utils.getTextures(name: Constants.Crash.walkingRight)
+        animations[Constants.Crash.walking] = Utils.getAnimationAction(name: Constants.Crash.walking, timePerFrame: 0.1)
+        
+        var textureSize: CGSize;
+        
+        if let mySize = idleFrames.first?.size() {
+            textureSize = mySize
+        } else {
+            textureSize = CGSize(width: 1.0, height: 1.0)
+        }
+        
+        super.init(texture: idleFrames.first, color: .clear, size: textureSize)
         
         self.name = "CrashBandicoot"
-        self.zPosition = 1.0
+        self.zPosition = 2.0
         self.position = position
-        self.size = CGSize(width: self.size.width/4, height: self.size.height/4)
+        //self.size = self.size/4
         
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.isDynamic = true
@@ -38,6 +53,8 @@ class CrashBandicoot: SKSpriteNode {
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.categoryBitMask = BitMaskCategory.crash
         self.physicsBody?.contactTestBitMask = BitMaskCategory.rollingStoneMovePoint & BitMaskCategory.rollingStone
+        
+        runAnimation(animations: animations, key: Constants.Crash.idle)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,20 +62,15 @@ class CrashBandicoot: SKSpriteNode {
     }
     
     func update() {
-        /*
-        velocityY += gravity
-        sprite.position.y -= velocityY
+        if isDead {return}
         
-        if sprite.position.y < playerPosY {
-            sprite.position.y = playerPosY
-            velocityY = 0.0
-            onGround = true
-        }*/
         if moveLeft {
             self.position.x -= 5
          }
-         if moveRight {
+         else if moveRight {
              self.position.x += 5
+         } else {
+             runAnimation(animations: animations, key: Constants.Crash.idle)
          }
     }
     
@@ -79,9 +91,14 @@ class CrashBandicoot: SKSpriteNode {
         if loc.x < self.position.x {
             self.moveLeft = true
             self.moveRight = false
+            xScale = -1.0
+            runAnimation(animations: animations, key: Constants.Crash.walking)
+            
         } else {
             self.moveRight = true
             self.moveLeft = false
+            xScale = 1.0
+            runAnimation(animations: animations, key: Constants.Crash.walking)
         }
     }
     
