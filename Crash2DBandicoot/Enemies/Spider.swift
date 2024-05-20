@@ -23,7 +23,7 @@ class Spider: SKSpriteNode {
         self.initialPosition = initialPos
         self.destPoint = initialPos
         // Load the sprite sheet
-        let textureAtlas = SKTextureAtlas(named: Constants.Spider.idle)
+        let textureAtlas = SKTextureAtlas(named: Animations.Spider.idle)
 
         // Create an array to store animation frames
         var animationFrames: [SKTexture] = []
@@ -34,8 +34,9 @@ class Spider: SKSpriteNode {
             animationFrames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
         }
         
-        animations[Constants.Spider.idle] = Utils.getAnimationAction(name: Constants.Spider.idle, timePerFrame: 0.1)
-        animations[Constants.Spider.walking] = Utils.getAnimationAction(name: Constants.Spider.walking, timePerFrame: 0.1)
+        animations[Animations.Spider.idle] = Utils.getAnimationAction(name: Animations.Spider.idle, timePerFrame: 0.1)
+        animations[Animations.Spider.walking] = Utils.getAnimationAction(name: Animations.Spider.walking, timePerFrame: 0.1)
+        animations[Animations.Spider.attack] = Utils.getAnimationAction(name: Animations.Spider.attack, timePerFrame: 0.1)
         
         var textureSize: CGSize;
         
@@ -57,7 +58,7 @@ class Spider: SKSpriteNode {
         self.physicsBody?.categoryBitMask = BitMaskCategory.spider
         self.physicsBody?.contactTestBitMask = BitMaskCategory.crash
         
-        runAnimation(animations: animations, key: Constants.Spider.walking)
+        runAnimation(animations: animations, key: Animations.Spider.walking)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +66,6 @@ class Spider: SKSpriteNode {
     }
     
     func update() {
-        let startWalking = Bool.random()
         
         if compareXPos() {
             randomWalk()
@@ -96,5 +96,16 @@ class Spider: SKSpriteNode {
     private func compareXPos() -> Bool {
         let epsilon: CGFloat = 0.1 // Adjust epsilon as needed
         return abs(self.position.x - destPoint.x) < epsilon
+    }
+    
+    func reset() {
+        nextMove = 0
+        self.destPoint = self.initialPosition
+        self.position = initialPosition
+        runAnimation(animations: animations, key: Animations.Spider.walking)
+    }
+    
+    func attack() {
+        runAnimation(animations: animations, key: Animations.Spider.attack, repeatAction: false)
     }
 }

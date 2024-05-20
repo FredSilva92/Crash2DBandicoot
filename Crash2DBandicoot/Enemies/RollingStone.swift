@@ -12,8 +12,6 @@ class RollingStone: SKSpriteNode {
     
     private var initialPosition: CGPoint
     
-    var test = false
-    
     init() {
 
         
@@ -45,7 +43,6 @@ class RollingStone: SKSpriteNode {
     
     func run() {
         setPhysiscsProps(true)
-        test = true
         /*let rotateAction = SKAction.rotate(byAngle: -CGFloat.pi, duration: 0.5)
         let repeatAction = SKAction.repeatForever(rotateAction)
         self.run(repeatAction, withKey: "rotateAction")*/
@@ -54,8 +51,6 @@ class RollingStone: SKSpriteNode {
     
     func update() {
         if self.physicsBody?.affectedByGravity == true && !isPaused {
-        //if test {
-            
             //self.sprite.position.x += 5
             self.zRotation -= 0.2
             //self.position.x += 5

@@ -19,18 +19,20 @@ class CrashBandicoot: SKSpriteNode {
     private var initialPosition: CGPoint
     private var jumpStrengh: CGVector
     private var animations:[String: SKAction] = [:]
+    var isAttacking = false
     var isDead = false
     
     init(position: CGPoint, sceneSize: CGSize) {
         self.initialPosition = position
         jumpStrengh = CGVector(dx: 0, dy: sceneSize.height/6)
         
-        let idleFrames = Utils.getTextures(name: Constants.Crash.idle)
-        let idleAction = SKAction.animate(with: idleFrames, timePerFrame: 0.2)
-        animations[Constants.Crash.idle] = Utils.getAnimationAction(name: Constants.Crash.idle, timePerFrame: 0.2)
+        let idleFrames = Utils.getTextures(name: Animations.Crash.idle)
+        //let idleAction = SKAction.animate(with: idleFrames, timePerFrame: 0.2)
         
-        //let walkingFrames = Utils.getTextures(name: Constants.Crash.walkingRight)
-        animations[Constants.Crash.walking] = Utils.getAnimationAction(name: Constants.Crash.walking, timePerFrame: 0.1)
+        animations[Animations.Crash.idle] = Utils.getAnimationAction(name: Animations.Crash.idle, timePerFrame: 0.2)
+        animations[Animations.Crash.walking] = Utils.getAnimationAction(name: Animations.Crash.walking, timePerFrame: 0.1)
+        animations[Animations.Crash.death] = Utils.getAnimationAction(name: Animations.Crash.death, timePerFrame: 0.1)
+        animations[Animations.Crash.attack] = Utils.getAnimationAction(name: Animations.Crash.attack, timePerFrame: 0.05)
         
         var textureSize: CGSize;
         
@@ -54,7 +56,7 @@ class CrashBandicoot: SKSpriteNode {
         self.physicsBody?.categoryBitMask = BitMaskCategory.crash
         self.physicsBody?.contactTestBitMask = BitMaskCategory.rollingStoneMovePoint & BitMaskCategory.rollingStone
         
-        runAnimation(animations: animations, key: Constants.Crash.idle)
+        runAnimation(animations: animations, key: Animations.Crash.idle)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,16 +69,13 @@ class CrashBandicoot: SKSpriteNode {
         if moveLeft {
             self.position.x -= 5
          }
-         else if moveRight {
-             self.position.x += 5
-         } else {
-             runAnimation(animations: animations, key: Constants.Crash.idle)
-         }
+        else if moveRight {
+            self.position.x += 5
+        }
     }
     
     func jump(touchPoint: CGPoint) {
         if physicsBody?.velocity.dy == 0 {
-            // Apply impulse to make the player jump
             physicsBody?.applyImpulse(jumpStrengh)
         }
     }
@@ -92,13 +91,13 @@ class CrashBandicoot: SKSpriteNode {
             self.moveLeft = true
             self.moveRight = false
             xScale = -1.0
-            runAnimation(animations: animations, key: Constants.Crash.walking)
+            runAnimation(animations: animations, key: Animations.Crash.walking)
             
         } else {
             self.moveRight = true
             self.moveLeft = false
             xScale = 1.0
-            runAnimation(animations: animations, key: Constants.Crash.walking)
+            runAnimation(animations: animations, key: Animations.Crash.walking)
         }
     }
     
@@ -110,9 +109,31 @@ class CrashBandicoot: SKSpriteNode {
     func stopMoving() {
         self.moveLeft = false
         self.moveRight = false
+        runAnimation(animations: animations, key: Animations.Crash.idle)
     }
     
-    func reset() {
-        self.position = initialPosition
+    func getDeathAction() -> SKAction {
+        self.isDead = true
+        runAnimation(animations: animations, key: Animations.Crash.death, repeatAction: false)
+        
+        return SKAction.run {
+            self.isDead = false
+            self.position = self.initialPosition
+            self.runAnimation(animations: self.animations, key: Animations.Crash.idle)
+        }
+    }
+    
+    func attack() {
+        isAttacking = true
+        runAnimation(animations: animations, key: Animations.Crash.attack)
+        
+        
+        run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            SKAction.run {
+                self.isAttacking = false
+                self.runAnimation(animations: self.animations, key: Animations.Crash.idle)
+            }
+        ]))
     }
 }

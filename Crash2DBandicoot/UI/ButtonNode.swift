@@ -13,20 +13,27 @@ class ButtonNode: SKSpriteNode {
         labelNode.text = labelText
         labelNode.fontName = "Arial"
         labelNode.fontSize = 20
-        labelNode.fontColor = UIColor.blue
+        labelNode.fontColor = UIColor.white
         labelNode.position = position
         labelNode.horizontalAlignmentMode = .left
         labelNode.verticalAlignmentMode = .top
         self.position = position
         self.addChild(labelNode)
         
-        var borderNode = SKShapeNode(rect: CGRect(origin: CGPoint(x: position.x * 0.7, y: position.y * 1.5), size: size), cornerRadius: 10)
-        borderNode.fillColor = .clear
-        borderNode.strokeColor = .white
-        //borderNode.position = position
-        //self.addChild(borderNode)
-        
-        // Enable user interaction
+        self.isUserInteractionEnabled = true
+    }
+
+    init(name: String, size: CGSize, position: CGPoint) {
+        let texture = SKTexture(imageNamed: name)
+        super.init(texture: texture, color: .clear, size: size)
+        self.position = position
+        self.isUserInteractionEnabled = true
+    }
+    
+    init(name: String, position: CGPoint) {
+        let texture = SKTexture(imageNamed: name)
+        super.init(texture: texture, color: .clear, size: texture.size())
+        self.position = position
         self.isUserInteractionEnabled = true
     }
     

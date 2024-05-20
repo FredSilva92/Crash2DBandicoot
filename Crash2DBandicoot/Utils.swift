@@ -34,9 +34,6 @@ class Utils {
         let names = textureAtlas.textureNames
         for i in 0..<names.count {
             var image: SKTexture = textureAtlas.textureNamed(names[i])
-            
-            
-            
             animationFrames.append(image)
         }
         

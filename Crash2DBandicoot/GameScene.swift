@@ -14,14 +14,10 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     
     override func sceneDidLoad() {
-        var bg = SKSpriteNode(imageNamed: "ForestBg")
-        
-        bg.zPosition = -1
-        addChild(bg)
         
         run(SKAction.run {
-            let gameoverScene = Level1(size: self.size)
-            self.view?.presentScene(gameoverScene)
+            let mainMenu = MainMenu(size: self.size)
+            self.view?.presentScene(mainMenu)
         })
     }
 }

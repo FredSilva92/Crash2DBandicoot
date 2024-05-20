@@ -33,10 +33,17 @@ extension CGPoint {
 extension SKSpriteNode {
     
     
-    func runAnimation(animations: [String:SKAction], key: String) {
+    func runAnimation(animations: [String:SKAction], key: String, repeatAction: Bool = true) {
         let defaulAnimation = SKAction.moveBy(x: 0, y: 0, duration: 1.0)
+        let action = (animations[key]) ?? defaulAnimation
         
         removeAllActions()
-        run(SKAction.repeatForever((animations[key]) ?? defaulAnimation), withKey: key)
+        
+        if repeatAction {
+            run(SKAction.repeatForever(action), withKey: key)
+        } else {
+            run(action, withKey: key)
+        }
+        
     }
 }
