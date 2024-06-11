@@ -20,4 +20,8 @@ struct SceneElement {
         static let star = "Star"
         static let spider = "Spider"
     }
+    
+    struct Hud {
+        static let lives = "lives"
+    }
 }

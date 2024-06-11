@@ -14,24 +14,12 @@ class MainMenu: SKScene {
     private var audioPlayer: AVAudioPlayer?
     
     override init(size : CGSize) {
-        let screenSize = UIScreen.main.bounds.size
         
-        // Calculate aspect ratio
-        let aspectRatio = screenSize.width / screenSize.height
-        
-        // Set base aspect ratio (you can adjust this according to your game)
-        let baseAspectRatio: CGFloat = 16.0 / 9.0
-        
-        var sceneSize: CGSize
-        if aspectRatio > baseAspectRatio {
-            sceneSize = CGSize(width: screenSize.height * baseAspectRatio, height: screenSize.height)
-        } else {
-            sceneSize = CGSize(width: screenSize.width, height: screenSize.width / baseAspectRatio)
-        }
+        let sceneSize = Utils.getAspectRatio(screenSize: UIScreen.main.bounds.size)
         
         super.init(size: sceneSize)
         
-        var borderNode = SKShapeNode(rect: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: sceneSize.width*10, height: sceneSize.height*10)), cornerRadius: 10)
+        let borderNode = SKShapeNode(rect: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: sceneSize.width*10, height: sceneSize.height*10)), cornerRadius: 10)
         
         borderNode.fillColor = .systemGreen
         addChild(borderNode)
@@ -56,7 +44,7 @@ class MainMenu: SKScene {
                 SKAction.wait(forDuration: 1),
                 SKAction.run {
                     let reveal = SKTransition.flipVertical(withDuration: 0.5)
-                    let level1 = Level1(size: self.size)
+                    let level1 = Level1(size: self.size, lives: 3)
                     self.view?.presentScene(level1, transition: reveal)
                 }
             ]))
@@ -104,7 +92,7 @@ class MainMenu: SKScene {
         //borderNode.zPosition = 3
         borderNode.addChild(closeBtn)
         
-        let creditsText = "Pedro Frederico Silva a20721\nJosé Pedro Lourenço a00000"
+        let creditsText = "Pedro Frederico Silva a20721\nJosé Pedro Lourenço a23496"
         
         let creditsNode = SKLabelNode(text: creditsText)
         creditsNode.fontName = "Arial"

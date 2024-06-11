@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class Utils {
     static func getTextures(name: String) -> [SKTexture] {
@@ -39,4 +40,51 @@ class Utils {
         
         return SKAction.animate(with: animationFrames, timePerFrame: timePerFrame)
     }
+    
+    static func getSoundEffect(name: String, ext: String) -> AVAudioPlayer? {
+        var sound: AVAudioPlayer?
+        
+        if let soundURL = Bundle.main.url(forResource: name, withExtension: ext) {
+            do {
+                sound = try AVAudioPlayer(contentsOf: soundURL)
+                sound?.numberOfLoops = -1 // Loop indefinitely
+                //sound?.volume = 1.5
+                //walkingSound?.play()
+            } catch {
+                print("Error: Could not find or play the sound file.")
+            }
+        }
+        
+        return sound
+    }
+    
+    static func getChildNode(named name: String, in node: SKNode) -> SKNode? {
+        if node.name == name {
+            return node
+        }
+        
+        for child in node.children {
+            if let foundNode = getChildNode(named: name, in: child) {
+                return foundNode
+            }
+        }
+        
+        return nil
+    }
+    
+    static func getAspectRatio(screenSize: CGSize) -> CGSize{
+        
+        let aspectRatio = screenSize.width / screenSize.height
+        
+        let baseAspectRatio: CGFloat = 16.0 / 9.0
+ 
+        if aspectRatio > baseAspectRatio {
+            return CGSize(width: screenSize.height * baseAspectRatio, height: screenSize.height)
+        }
+            
+        return CGSize(width: screenSize.width, height: screenSize.width / baseAspectRatio)
+        
+    }
 }
+
+

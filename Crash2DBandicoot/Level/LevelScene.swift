@@ -21,33 +21,20 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
     private var cameraNode = SKCameraNode()
     private var bg = SKSpriteNode(imageNamed: "ForestBg")
     internal var crash: CrashBandicoot
-    private var deathThreshold: CGFloat = 0.0
+    internal var deathThreshold: CGFloat = 0.0
     private var ratio = 0.0
     private var hudNode: SKNode
     private var isGamePaused = false
     internal var audioPlayer: AVAudioPlayer?
     
-    override init(size : CGSize) {
+    init(size : CGSize, lives: Int) {
         
-        // Get device screen size
-        let screenSize = UIScreen.main.bounds.size
-        
-        // Calculate aspect ratio
-        let aspectRatio = screenSize.width / screenSize.height
-        
-        // Set base aspect ratio (you can adjust this according to your game)
-        let baseAspectRatio: CGFloat = 16.0 / 9.0
-        
-        // Calculate scene size based on device aspect ratio
-        var sceneSize: CGSize
-        if aspectRatio > baseAspectRatio {
-            sceneSize = CGSize(width: screenSize.height * baseAspectRatio, height: screenSize.height)
-        } else {
-            sceneSize = CGSize(width: screenSize.width, height: screenSize.width / baseAspectRatio)
-        }
+        let sceneSize = Utils.getAspectRatio(screenSize: UIScreen.main.bounds.size)
         
         ratio = sceneSize.width / 12
-        crash = CrashBandicoot(position: CGPoint(x: screenSize.width/2, y: sceneSize.height/3), sceneSize: sceneSize);
+        crash = CrashBandicoot(position: CGPoint(x: sceneSize.width/2, y: sceneSize.height/3),
+                               sceneSize: sceneSize,
+                               lives: lives);
         
         hudNode = SKNode()
         hudNode.zPosition = 10000
@@ -66,45 +53,11 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
         deathThreshold = 0.0
         setupCamera()
         
-        let buttonSize = CGSize(width: 90, height: 30)
+        setupHud(screenSize: sceneSize)
         
-        let buttonAttackPos = CGPoint(x: screenSize.width/6.5, y: -screenSize.height/6.5)
-        let button = ButtonNode(size: buttonSize, labelText: "Attack", position: buttonAttackPos)
-        button.name = "AttackBtn"
-
-        button.action = {(touches: Set<UITouch>) in
-            if self.isGamePaused {
-                return
-            }
-            // Add action here
-            self.crash.attack()
-            print("Attack!")
-        }
-        
-        let buttonPausePos = CGPoint(x: -screenSize.width/5.5, y: screenSize.height/5.5)
-        let buttonPause = ButtonNode(size: buttonSize, labelText: "Pause", position: buttonPausePos)
-        button.name = "PauseBtn"
-        
-        buttonPause.action = { (touches: Set<UITouch>) in
-            // Add action here
-            
-            if(!self.isGamePaused) {
-                self.pauseGame()
-            }
-            print("Pause!")
-        }
-        
-        hudNode.addChild(button)
-        hudNode.addChild(buttonPause)
-        
-        if let soundURL = Bundle.main.url(forResource: "LevelSound", withExtension: "mp3") {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-                audioPlayer?.play()
-            } catch {
-                print("Error: Could not find or play the sound file.")
-            }
-        }
+        audioPlayer = Utils.getSoundEffect(name: "LevelSound", ext: "mp3")
+        audioPlayer?.volume = 0.25
+        audioPlayer?.play()
     }
     
     override func sceneDidLoad() {
@@ -213,7 +166,7 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
                 
                 if letter == SceneElement.platform {
                     
-                    let element = GameElement(imageNamed: "plainDirt2",
+                    let element = GameElement(imageNamed: "Ground",
                                               name: SceneElement.Names.platform,
                                               initialPosition: pos,
                                               ratio: ratio)
@@ -222,7 +175,7 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
                     
                 } else if letter == SceneElement.wood {
                     
-                    let element = GameElement(imageNamed: "plainDirt0",
+                    let element = GameElement(imageNamed: "Wood",
                                               name: SceneElement.Names.wood,
                                               initialPosition: pos,
                                               ratio: ratio)
@@ -265,7 +218,31 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
         
         let resetCrash = crash.getDeathAction()
         
+        
+        if let specificNode = Utils.getChildNode(named: SceneElement.Hud.lives, in: hudNode) as? SKLabelNode {
+            // Now you can use specificNode as an SKLabelNode
+            specificNode.text = String(self.crash.lives)
+        }
+        
         execActions(actionsToPass: [SKAction.wait(forDuration: 1.5), resetCrash])
+        
+        if crash.lives == 0 {
+
+            
+            execActions(actionsToPass: [SKAction.run{
+                let GameOverScreen = ScreenOverlay(labelText: "Game over", layoutName: "GameOverLayout")
+                self.isGamePaused = true
+                self.audioPlayer?.stop()
+                
+                self.hudNode.addChild(GameOverScreen)
+            },
+            SKAction.wait(forDuration: 2),
+            SKAction.run {
+                let reveal = SKTransition.flipVertical(withDuration: 0.5)
+                let scene = MainMenu(size: self.size)
+                self.view?.presentScene(scene, transition: reveal)
+            }])
+        }
     }
     
     func pauseGame() {
@@ -277,7 +254,6 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
         let pauseLabel = ButtonNode(size: CGSize(width: 90, height: 30), labelText: "Paused", position: buttonPausePos)
         pauseLabel.name = "pausedLabel"
         pauseLabel.action = { (touches: Set<UITouch>) in
-            // Add action here
             
             self.resumeGame()
             print("resume!")
@@ -325,21 +301,61 @@ class LevelScene: SKScene, SKPhysicsContactDelegate {
         return nodesOfType
     }
     
+    func setupHud(screenSize: CGSize) {
+        let buttonSize = CGSize(width: 90, height: 30)
+        
+        let buttonAttackPos = CGPoint(x: screenSize.width/5.5, y: -screenSize.height/6)
+        let buttonAttack = ButtonNode(size: buttonSize, labelText: "Attack", position: buttonAttackPos)
+        buttonAttack.name = "AttackBtn"
+
+        buttonAttack.action = {(touches: Set<UITouch>) in
+            if self.isGamePaused {
+                return
+            }
+            // Add action here
+            self.crash.attack()
+            print("Attack!")
+        }
+        
+        let buttonPausePos = CGPoint(x: -screenSize.width/4.5, y: screenSize.height/5.5)
+        let buttonPause = ButtonNode(size: buttonSize, labelText: "Pause", position: buttonPausePos)
+        buttonPause.name = "PauseBtn"
+        
+        buttonPause.action = { (touches: Set<UITouch>) in
+            // Add action here
+            
+            if(!self.isGamePaused) {
+                self.pauseGame()
+            }
+            print("Pause!")
+        }
+        
+        let liveNode = SKNode()
+        liveNode.position = CGPoint(x: screenSize.width/2.5, y: screenSize.height/3)
+        
+        let texture = SKTexture(imageNamed: "CrashLife")
+        let liveIcon = SKSpriteNode(texture: texture)
+        liveNode.addChild(liveIcon)
+        
+        let liveValue = SKLabelNode(text: String(crash.lives))
+        liveValue.fontName = "CrashFont"
+        liveValue.fontSize = 20
+        liveValue.fontColor = UIColor.white
+        liveValue.name = SceneElement.Hud.lives
+        liveValue.position = CGPoint(x: texture.size().width/1.5, y: -texture.size().height/2.5)
+        liveNode.addChild(liveValue)
+        
+        
+        hudNode.addChild(buttonPause)
+        hudNode.addChild(buttonAttack)
+        hudNode.addChild(liveNode)
+    }
+    
     func loadingScreen() {
         
         isGamePaused = true
+        let loadingScreen = ScreenOverlay(labelText: "Loading...", layoutName: "loadingLayout")
         
-        let screenSize = UIScreen.main.bounds.size
-        let buttonPausePos = CGPoint(x: 0, y: 0)
-        let loadingLabel = ButtonNode(size: CGSize(width: 90, height: 30), labelText: "Loading...", position: buttonPausePos)
-        loadingLabel.name = "loadingLabel"
-        
-        var borderNode = SKShapeNode(rect: CGRect(origin: CGPoint(x: -screenSize.width/2, y: -screenSize.height/2), size: CGSize(width: 2000, height: 3000)), cornerRadius: 10)
-        let color = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        borderNode.fillColor = color
-        borderNode.name = "loadingLayout"
-        borderNode.addChild(loadingLabel)
-        
-        hudNode.addChild(borderNode)
+        hudNode.addChild(loadingScreen)
     }
 }

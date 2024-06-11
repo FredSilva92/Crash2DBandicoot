@@ -11,7 +11,7 @@ class ButtonNode: SKSpriteNode {
         // Set up label
         labelNode = SKLabelNode(text: labelText)
         labelNode.text = labelText
-        labelNode.fontName = "Arial"
+        labelNode.fontName = "CrashFont"
         labelNode.fontSize = 20
         labelNode.fontColor = UIColor.white
         labelNode.position = position

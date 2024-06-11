@@ -12,8 +12,8 @@ class Level2: LevelScene {
     
     private var spiders: [Spider] = []
     
-    override init(size: CGSize){
-        super.init(size: size)
+    override init(size: CGSize, lives: Int){
+        super.init(size: size, lives: lives)
         
         buildLevel(levelFile: "Level2")
         spiders = getNodes(withName: "Spider", ofType: Spider.self)
@@ -39,6 +39,7 @@ class Level2: LevelScene {
             
             if crash.isAttacking {
                 spider?.removeFromParent()
+                crash.isAttacking = false
             } else {
                 spider?.xScale = -crash.xScale
                 spider?.attack()

@@ -35,9 +35,14 @@
 		7E4E04F72BEFB68900C4CC47 /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04F62BEFB68900C4CC47 /* LevelScene.swift */; };
 		7E715F332BF2A4DE00E7EB99 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E715F322BF2A4DE00E7EB99 /* ButtonNode.swift */; };
 		7E715F372BF4062C00E7EB99 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E715F362BF4062C00E7EB99 /* Animations.swift */; };
+		7E728C822C0A1DF5008384DF /* ScreenOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E728C812C0A1DF5008384DF /* ScreenOverlay.swift */; };
+		7EECE1152BFF40EB00F9E7F1 /* WebShoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE10F2BFF40EB00F9E7F1 /* WebShoot.mp3 */; };
+		7EECE1162BFF40EB00F9E7F1 /* CrashSpin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE1102BFF40EB00F9E7F1 /* CrashSpin.mp3 */; };
+		7EECE1172BFF40EB00F9E7F1 /* LevelSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE1112BFF40EB00F9E7F1 /* LevelSound.mp3 */; };
+		7EECE1182BFF40EB00F9E7F1 /* RollStone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE1122BFF40EB00F9E7F1 /* RollStone.wav */; };
+		7EECE1192BFF40EB00F9E7F1 /* WalkingSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE1132BFF40EB00F9E7F1 /* WalkingSound.mp3 */; };
+		7EECE11A2BFF40EB00F9E7F1 /* MainMenu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EECE1142BFF40EB00F9E7F1 /* MainMenu.mp3 */; };
 		7EEFCA762BF91BF400B3CFBE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEFCA752BF91BF400B3CFBE /* MainMenu.swift */; };
-		7EFA3FD62BFBF95600A87115 /* MainMenu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EFA3FD52BFBF95600A87115 /* MainMenu.mp3 */; };
-		7EFA3FD82BFBFAE500A87115 /* LevelSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7EFA3FD72BFBFAE500A87115 /* LevelSound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,9 +94,16 @@
 		7E4E04F62BEFB68900C4CC47 /* LevelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
 		7E715F322BF2A4DE00E7EB99 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		7E715F362BF4062C00E7EB99 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		7E728C812C0A1DF5008384DF /* ScreenOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenOverlay.swift; sourceTree = "<group>"; };
+		7EECE10F2BFF40EB00F9E7F1 /* WebShoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WebShoot.mp3; sourceTree = "<group>"; };
+		7EECE1102BFF40EB00F9E7F1 /* CrashSpin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CrashSpin.mp3; sourceTree = "<group>"; };
+		7EECE1112BFF40EB00F9E7F1 /* LevelSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LevelSound.mp3; sourceTree = "<group>"; };
+		7EECE1122BFF40EB00F9E7F1 /* RollStone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = RollStone.wav; sourceTree = "<group>"; };
+		7EECE1132BFF40EB00F9E7F1 /* WalkingSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WalkingSound.mp3; sourceTree = "<group>"; };
+		7EECE1142BFF40EB00F9E7F1 /* MainMenu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MainMenu.mp3; sourceTree = "<group>"; };
 		7EEFCA752BF91BF400B3CFBE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		7EFA3FD52BFBF95600A87115 /* MainMenu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = MainMenu.mp3; path = ../../../../../../Downloads/MainMenu.mp3; sourceTree = "<group>"; };
-		7EFA3FD72BFBFAE500A87115 /* LevelSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = LevelSound.mp3; path = ../../../../../../Downloads/LevelSound.mp3; sourceTree = "<group>"; };
+		7EFA3FDC2BFC047200A87115 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7EFA3FDD2BFC058600A87115 /* CrashFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CrashFont.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +154,8 @@
 		7E1B32342BCED012004E2CF7 /* Crash2DBandicoot */ = {
 			isa = PBXGroup;
 			children = (
+				7EFA3FD92BFC02B900A87115 /* Font */,
+				7EFA3FDC2BFC047200A87115 /* Info.plist */,
 				7EFA3FD42BFBF93A00A87115 /* Sounds */,
 				7E715F2F2BF2A4B900E7EB99 /* UI */,
 				7E715F2E2BF2A49700E7EB99 /* Level */,
@@ -242,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				7E715F322BF2A4DE00E7EB99 /* ButtonNode.swift */,
+				7E728C812C0A1DF5008384DF /* ScreenOverlay.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -249,10 +264,22 @@
 		7EFA3FD42BFBF93A00A87115 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				7EFA3FD72BFBFAE500A87115 /* LevelSound.mp3 */,
-				7EFA3FD52BFBF95600A87115 /* MainMenu.mp3 */,
+				7EECE1102BFF40EB00F9E7F1 /* CrashSpin.mp3 */,
+				7EECE1112BFF40EB00F9E7F1 /* LevelSound.mp3 */,
+				7EECE1142BFF40EB00F9E7F1 /* MainMenu.mp3 */,
+				7EECE1122BFF40EB00F9E7F1 /* RollStone.wav */,
+				7EECE1132BFF40EB00F9E7F1 /* WalkingSound.mp3 */,
+				7EECE10F2BFF40EB00F9E7F1 /* WebShoot.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		7EFA3FD92BFC02B900A87115 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				7EFA3FDD2BFC058600A87115 /* CrashFont.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,11 +388,15 @@
 			files = (
 				7E1B32382BCED012004E2CF7 /* GameScene.sks in Resources */,
 				7E4E04E72BED6C9E00C4CC47 /* Level1.txt in Resources */,
+				7EECE11A2BFF40EB00F9E7F1 /* MainMenu.mp3 in Resources */,
+				7EECE1162BFF40EB00F9E7F1 /* CrashSpin.mp3 in Resources */,
 				7E419CD52BF0281B00C9D882 /* Level2.txt in Resources */,
-				7EFA3FD82BFBFAE500A87115 /* LevelSound.mp3 in Resources */,
+				7EECE1182BFF40EB00F9E7F1 /* RollStone.wav in Resources */,
 				7E1B32412BCED012004E2CF7 /* Base in Resources */,
-				7EFA3FD62BFBF95600A87115 /* MainMenu.mp3 in Resources */,
 				7E1B32432BCED015004E2CF7 /* Assets.xcassets in Resources */,
+				7EECE1152BFF40EB00F9E7F1 /* WebShoot.mp3 in Resources */,
+				7EECE1192BFF40EB00F9E7F1 /* WalkingSound.mp3 in Resources */,
+				7EECE1172BFF40EB00F9E7F1 /* LevelSound.mp3 in Resources */,
 				7E1B323A2BCED012004E2CF7 /* Actions.sks in Resources */,
 				7E1B32462BCED015004E2CF7 /* Base in Resources */,
 			);
@@ -408,6 +439,7 @@
 				7E4E04EF2BEE65BC00C4CC47 /* Level2.swift in Sources */,
 				7E1B32692BD54D7F004E2CF7 /* CrashBandicoot.swift in Sources */,
 				7E715F332BF2A4DE00E7EB99 /* ButtonNode.swift in Sources */,
+				7E728C822C0A1DF5008384DF /* ScreenOverlay.swift in Sources */,
 				7E419CD72BF0FD3000C9D882 /* Spider.swift in Sources */,
 				7E4E04D82BEA943700C4CC47 /* RollingStone.swift in Sources */,
 				7E715F372BF4062C00E7EB99 /* Animations.swift in Sources */,
@@ -593,6 +625,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Crash2DBandicoot/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -620,6 +654,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Crash2DBandicoot/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

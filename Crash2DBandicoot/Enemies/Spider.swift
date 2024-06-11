@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class Spider: SKSpriteNode {
     
@@ -17,6 +18,7 @@ class Spider: SKSpriteNode {
     private var destMove: CGFloat = 0.0
     private var destPoint: CGPoint
     private var animations:[String: SKAction] = [:]
+    private var attackSound: AVAudioPlayer?
     
     init(initialPos: CGPoint) {
         
@@ -53,10 +55,14 @@ class Spider: SKSpriteNode {
         self.position = initialPosition
         
         self.zPosition = 1.0
-        self.physicsBody = SKPhysicsBody(rectangleOf: size)
+        self.anchorPoint = CGPoint(x: 0.25, y: 0.25)
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: size.height/2))
         
         self.physicsBody?.categoryBitMask = BitMaskCategory.spider
         self.physicsBody?.contactTestBitMask = BitMaskCategory.crash
+        
+        attackSound = Utils.getSoundEffect(name: "WebShoot", ext: "mp3")
+        attackSound?.numberOfLoops = 0
         
         runAnimation(animations: animations, key: Animations.Spider.walking)
     }
@@ -107,5 +113,7 @@ class Spider: SKSpriteNode {
     
     func attack() {
         runAnimation(animations: animations, key: Animations.Spider.attack, repeatAction: false)
+        attackSound?.prepareToPlay()
+        attackSound?.play()
     }
 }

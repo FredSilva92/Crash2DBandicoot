@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class CrashBandicoot: SKSpriteNode {
     
@@ -19,10 +20,13 @@ class CrashBandicoot: SKSpriteNode {
     private var initialPosition: CGPoint
     private var jumpStrengh: CGVector
     private var animations:[String: SKAction] = [:]
+    private var walkingSound: AVAudioPlayer?
+    private var attackSound: AVAudioPlayer?
+    var lives = 0
     var isAttacking = false
     var isDead = false
     
-    init(position: CGPoint, sceneSize: CGSize) {
+    init(position: CGPoint, sceneSize: CGSize, lives: Int) {
         self.initialPosition = position
         jumpStrengh = CGVector(dx: 0, dy: sceneSize.height/6)
         
@@ -47,7 +51,7 @@ class CrashBandicoot: SKSpriteNode {
         self.name = "CrashBandicoot"
         self.zPosition = 2.0
         self.position = position
-        //self.size = self.size/4
+        self.lives = lives
         
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.isDynamic = true
@@ -55,6 +59,12 @@ class CrashBandicoot: SKSpriteNode {
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.categoryBitMask = BitMaskCategory.crash
         self.physicsBody?.contactTestBitMask = BitMaskCategory.rollingStoneMovePoint & BitMaskCategory.rollingStone
+        
+        walkingSound = Utils.getSoundEffect(name: "WalkingSound", ext: "mp3")
+        walkingSound?.volume = 1.5
+        
+        attackSound = Utils.getSoundEffect(name: "CrashSpin", ext: "mp3")
+        walkingSound?.volume = 1.5
         
         runAnimation(animations: animations, key: Animations.Crash.idle)
     }
@@ -68,9 +78,11 @@ class CrashBandicoot: SKSpriteNode {
         
         if moveLeft {
             self.position.x -= 5
+            playWalkingSound()
          }
         else if moveRight {
             self.position.x += 5
+            playWalkingSound()
         }
     }
     
@@ -109,12 +121,17 @@ class CrashBandicoot: SKSpriteNode {
     func stopMoving() {
         self.moveLeft = false
         self.moveRight = false
-        runAnimation(animations: animations, key: Animations.Crash.idle)
+        walkingSound?.stop()
+        if !isDead {
+            runAnimation(animations: animations, key: Animations.Crash.idle)
+        }
+        
     }
     
     func getDeathAction() -> SKAction {
         self.isDead = true
         runAnimation(animations: animations, key: Animations.Crash.death, repeatAction: false)
+        self.lives -= 1
         
         return SKAction.run {
             self.isDead = false
@@ -124,7 +141,12 @@ class CrashBandicoot: SKSpriteNode {
     }
     
     func attack() {
+        if isAttacking || isDead {
+            return
+        }
+        
         isAttacking = true
+        attackSound?.play()
         runAnimation(animations: animations, key: Animations.Crash.attack)
         
         
@@ -132,8 +154,18 @@ class CrashBandicoot: SKSpriteNode {
             SKAction.wait(forDuration: 0.5),
             SKAction.run {
                 self.isAttacking = false
+                self.attackSound?.stop()
                 self.runAnimation(animations: self.animations, key: Animations.Crash.idle)
             }
         ]))
+    }
+    
+    private func playWalkingSound() {
+        if physicsBody?.velocity.dy == 0 {
+            walkingSound?.prepareToPlay()
+            walkingSound?.play()
+        } else {
+            walkingSound?.stop()
+        }
     }
 }

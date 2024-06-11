@@ -10,21 +10,16 @@ import SpriteKit
 
 class Level1: LevelScene {
     private var rollingStone: RollingStone
-    private var startRStoneCollider: InvislbleCollider?
     
-    override init(size: CGSize) {
+    override init(size: CGSize, lives: Int) {
         rollingStone = RollingStone()
         
-        super.init(size: size)
+        super.init(size: size, lives: lives)
         
         buildLevel(levelFile: "Level1")
         
         addChild(crash)
-        
-        //startRStoneCollider = InvislbleCollider(point: CGPoint(x: rollingStone.position.x * 1.4, y: 0))
-
         addChild(rollingStone)
-        //addChild(startRStoneCollider!)
     }
     
     
@@ -38,20 +33,21 @@ class Level1: LevelScene {
         
         if(first.categoryBitMask == BitMaskCategory.rollingStoneMovePoint &&
            second.categoryBitMask == BitMaskCategory.crash) {
-            startRStoneCollider?.removeFromParent()
             rollingStone.run()
         }
         
         if (first.categoryBitMask == BitMaskCategory.rollingStone &&
             second.categoryBitMask == BitMaskCategory.crash) {
-            //startRStoneCollider?.removeFromParent()
-            onDead()
+            
+            if !crash.isDead {
+                onDead()
+            }
+            
         }
         
         if (first.categoryBitMask == BitMaskCategory.rollingStone &&
             second.categoryBitMask == BitMaskCategory.woodPath) {
-            //startRStoneCollider?.removeFromParent()
-            rollingStone.physicsBody?.applyImpulse(CGVector(dx: -1, dy: 0))
+            
             second.isDynamic = true
             second.affectedByGravity = true
         }
@@ -66,7 +62,7 @@ class Level1: LevelScene {
                 SKAction.wait(forDuration: 2),
                 SKAction.run {
                     let reveal = SKTransition.flipVertical(withDuration: 0.5)
-                    let scene = Level2(size: self.size)
+                    let scene = Level2(size: self.size, lives: self.crash.lives)
                     self.view?.presentScene(scene, transition: reveal)
                 }
             ]))
@@ -83,14 +79,13 @@ class Level1: LevelScene {
                 rollingStone.run()
             }
             
-            rollingStone.update()
+            rollingStone.update(deathThreshold: deathThreshold)
         }
     }
     
     override func execActions(actionsToPass: [SKAction]) {
         let resetStone = SKAction.run {
             self.rollingStone.reset()
-            //self.addChild(self.startRStoneCollider!)
             self.resetWoodPath()
         }
 
