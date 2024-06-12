@@ -24,13 +24,11 @@
 		7E4E04D82BEA943700C4CC47 /* RollingStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04D72BEA943700C4CC47 /* RollingStone.swift */; };
 		7E4E04DA2BEBBAC600C4CC47 /* GameElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04D92BEBBAC600C4CC47 /* GameElement.swift */; };
 		7E4E04DC2BEBC93200C4CC47 /* BitMaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04DB2BEBC93200C4CC47 /* BitMaskCategory.swift */; };
-		7E4E04DF2BEBCE2E00C4CC47 /* InvisibleCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04DE2BEBCE2E00C4CC47 /* InvisibleCollider.swift */; };
 		7E4E04E22BEBD34600C4CC47 /* MyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04E12BEBD34600C4CC47 /* MyExtensions.swift */; };
 		7E4E04E42BED6AF700C4CC47 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04E32BED6AF600C4CC47 /* Utils.swift */; };
 		7E4E04E72BED6C9E00C4CC47 /* Level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7E4E04E62BED6C9E00C4CC47 /* Level1.txt */; };
 		7E4E04ED2BED735900C4CC47 /* SceneElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04EC2BED735900C4CC47 /* SceneElement.swift */; };
 		7E4E04EF2BEE65BC00C4CC47 /* Level2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04EE2BEE65BC00C4CC47 /* Level2.swift */; };
-		7E4E04F12BEE683F00C4CC47 /* SpriteSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04F02BEE683F00C4CC47 /* SpriteSize.swift */; };
 		7E4E04F32BEFB3FF00C4CC47 /* Level1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04F22BEFB3FF00C4CC47 /* Level1.swift */; };
 		7E4E04F72BEFB68900C4CC47 /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E04F62BEFB68900C4CC47 /* LevelScene.swift */; };
 		7E715F332BF2A4DE00E7EB99 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E715F322BF2A4DE00E7EB99 /* ButtonNode.swift */; };
@@ -83,13 +81,11 @@
 		7E4E04D72BEA943700C4CC47 /* RollingStone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingStone.swift; sourceTree = "<group>"; };
 		7E4E04D92BEBBAC600C4CC47 /* GameElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElement.swift; sourceTree = "<group>"; };
 		7E4E04DB2BEBC93200C4CC47 /* BitMaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitMaskCategory.swift; sourceTree = "<group>"; };
-		7E4E04DE2BEBCE2E00C4CC47 /* InvisibleCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvisibleCollider.swift; sourceTree = "<group>"; };
 		7E4E04E12BEBD34600C4CC47 /* MyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExtensions.swift; sourceTree = "<group>"; };
 		7E4E04E32BED6AF600C4CC47 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		7E4E04E62BED6C9E00C4CC47 /* Level1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Level1.txt; sourceTree = "<group>"; };
 		7E4E04EC2BED735900C4CC47 /* SceneElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneElement.swift; sourceTree = "<group>"; };
 		7E4E04EE2BEE65BC00C4CC47 /* Level2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level2.swift; sourceTree = "<group>"; };
-		7E4E04F02BEE683F00C4CC47 /* SpriteSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteSize.swift; sourceTree = "<group>"; };
 		7E4E04F22BEFB3FF00C4CC47 /* Level1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level1.swift; sourceTree = "<group>"; };
 		7E4E04F62BEFB68900C4CC47 /* LevelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
 		7E715F322BF2A4DE00E7EB99 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
@@ -209,7 +205,6 @@
 		7E4E04DD2BEBCE1600C4CC47 /* Colliders */ = {
 			isa = PBXGroup;
 			children = (
-				7E4E04DE2BEBCE2E00C4CC47 /* InvisibleCollider.swift */,
 			);
 			path = Colliders;
 			sourceTree = "<group>";
@@ -236,7 +231,6 @@
 			children = (
 				7E4E04DB2BEBC93200C4CC47 /* BitMaskCategory.swift */,
 				7E4E04EC2BED735900C4CC47 /* SceneElement.swift */,
-				7E4E04F02BEE683F00C4CC47 /* SpriteSize.swift */,
 				7E715F362BF4062C00E7EB99 /* Animations.swift */,
 			);
 			path = Enums;
@@ -426,7 +420,6 @@
 				7E4E04F32BEFB3FF00C4CC47 /* Level1.swift in Sources */,
 				7E1B323C2BCED012004E2CF7 /* GameScene.swift in Sources */,
 				7E1B323E2BCED012004E2CF7 /* GameViewController.swift in Sources */,
-				7E4E04F12BEE683F00C4CC47 /* SpriteSize.swift in Sources */,
 				7E4E04DA2BEBBAC600C4CC47 /* GameElement.swift in Sources */,
 				7E4E04ED2BED735900C4CC47 /* SceneElement.swift in Sources */,
 				7E4E04DC2BEBC93200C4CC47 /* BitMaskCategory.swift in Sources */,
@@ -434,7 +427,6 @@
 				7E1B32362BCED012004E2CF7 /* AppDelegate.swift in Sources */,
 				7E4E04E42BED6AF700C4CC47 /* Utils.swift in Sources */,
 				7E4E04F72BEFB68900C4CC47 /* LevelScene.swift in Sources */,
-				7E4E04DF2BEBCE2E00C4CC47 /* InvisibleCollider.swift in Sources */,
 				7E4E04E22BEBD34600C4CC47 /* MyExtensions.swift in Sources */,
 				7E4E04EF2BEE65BC00C4CC47 /* Level2.swift in Sources */,
 				7E1B32692BD54D7F004E2CF7 /* CrashBandicoot.swift in Sources */,
