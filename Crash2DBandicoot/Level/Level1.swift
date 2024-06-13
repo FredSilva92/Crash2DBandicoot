@@ -56,6 +56,7 @@ class Level1: LevelScene {
             second.categoryBitMask == BitMaskCategory.star) {
             
             audioPlayer?.stop()
+            rollingStone.stopSound()
             loadingScreen()
             
             run(SKAction.sequence([

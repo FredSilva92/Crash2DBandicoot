@@ -82,4 +82,8 @@ class RollingStone: SKSpriteNode {
         self.physicsBody?.affectedByGravity = value
         self.physicsBody?.allowsRotation = value
     }
+    
+    func stopSound() {
+        rollSound?.stop()
+    }
 }
